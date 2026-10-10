@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On this page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #111111;
+    --heading: #a1a1a1;
+    --text: #6e6e6e;
+    --text-hover: #d6d6d6;
+    --text-active: #fafafa;
+    --line: #3d3d3d;
+    --dot: #444444;
+    --arrow: #f2f2f2;
+
+    --row: 30px;      /* vertical pitch between items */
+    --indent: 13px;   /* horizontal step per nesting level */
+    --gutter: 6px;    /* x of the level-0 dots */
+    --label-gap: 14px;/* dot centre -> label */
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .section {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+
+  .toc {
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    transform-origin: center;
+  }
+
+  .toc__heading {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--heading);
+  }
+
+  .toc__heading svg {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin-left: 0;
+    margin-right: calc(var(--gutter) + var(--label-gap) - 12px);
+  }
+
+  .toc__body { position: relative; }
+
+  .toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc__item { height: var(--row); }
+
+  .toc__link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 8px 0 calc(var(--gutter) + var(--label-gap) + var(--level) * var(--indent));
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: 400;
+    color: var(--text);
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .toc__link:hover { color: var(--text-hover); }
+
+  .toc__link:focus-visible {
+    outline: 1px solid #555;
+    outline-offset: -2px;
+    border-radius: 4px;
+    color: var(--text-hover);
+  }
+
+  .toc__link[aria-current="true"] {
+    color: var(--text-active);
+    font-weight: 500;
+  }
+
+  .toc__rail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .rail__stub,
+  .rail__track,
+  .rail__trail {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .rail__track { stroke-dasharray: 2.5 4; }
+
+  .rail__dot {
+    fill: var(--bg);
+    stroke: var(--dot);
+    stroke-width: 1.25;
+    transition: fill 0.15s ease, opacity 0.12s ease;
+  }
+
+  .rail__dot.is-passed { fill: var(--dot); }
+  .rail__dot.is-hidden { opacity: 0; }
+
+  .rail__arrow { fill: var(--arrow); }
+
+  @media (max-width: 480px) {
+    .section { padding: 40px 20px; }
+    .toc { transform: scale(1.15); }
+  }
+
+  @media (max-width: 300px) {
+    .toc { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="section">
+  <nav class="toc" aria-label="On this page">
+    <p class="toc__heading">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true">
+        <path d="M1 2.5h10M1 6h7.5M1 9.5h5"/>
+      </svg>
+      On this page
+    </p>
+
+    <div class="toc__body">
+      <svg class="toc__rail" aria-hidden="true">
+        <defs>
+          <linearGradient id="stubFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3d3d3d" stop-opacity="0"/>
+            <stop offset="1" stop-color="#3d3d3d" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <rect class="rail__stubRect" width="1.25" fill="url(#stubFade)"/>
+        <path class="rail__track"/>
+        <path class="rail__trail"/>
+        <g class="rail__dots"></g>
+        <path class="rail__arrow" d="M0 7 L-6 -7 L0 -4 L6 -7 Z"/>
+      </svg>
+
+      <ul class="toc__list">
+        <li class="toc__item"><button class="toc__link" style="--level:0" data-level="0" aria-current="true">Installation</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:1" data-level="1">Prerequisites</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:1" data-level="1">Installation Steps</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:1" data-level="1">Configuration</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:0" data-level="0">Usage</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:1" data-level="1">Customizing Content</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:2" data-level="2">Submenu Content</button></li>
+        <li class="toc__item"><button class="toc__link" style="--level:0" data-level="0">Features</button></li>
+      </ul>
+    </div>
+  </nav>
+</main>
+
+<script>
+(function () {
+  var ROW = 30, INDENT = 13, GUTTER = 6;
+  var V_LEAD = 9;        // straight run below/above each dot before the diagonal
+  var STUB = 14;         // line above the first dot
+  var DOT_R = 3;
+
+  var body = document.querySelector('.toc__body');
+  var rail = body.querySelector('.toc__rail');
+  var track = rail.querySelector('.rail__track');
+  var trail = rail.querySelector('.rail__trail');
+  var stub = rail.querySelector('.rail__stubRect');
+  var dotsGroup = rail.querySelector('.rail__dots');
+  var arrow = rail.querySelector('.rail__arrow');
+  var links = Array.prototype.slice.call(body.querySelectorAll('.toc__link'));
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Dot positions
+  var points = links.map(function (link, i) {
+    return { x: GUTTER + Number(link.dataset.level) * INDENT, y: i * ROW + ROW / 2 };
+  });
+
+  // Zig-zag path through every dot, and the length along it at which each dot sits
+  var d = 'M' + points[0].x + ' ' + points[0].y;
+  var stops = [0];
+  var acc = 0;
+  for (var i = 1; i < points.length; i++) {
+    var a = points[i - 1], b = points[i];
+    if (a.x === b.x) {
+      d += ' L' + b.x + ' ' + b.y;
+      acc += b.y - a.y;
+    } else {
+      var y1 = a.y + V_LEAD, y2 = b.y - V_LEAD;
+      d += ' L' + a.x + ' ' + y1 + ' L' + b.x + ' ' + y2 + ' L' + b.x + ' ' + b.y;
+      acc += V_LEAD * 2 + Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(y2 - y1, 2));
+    }
+    stops.push(acc);
+  }
+  var total = acc;
+
+  rail.setAttribute('width', 40);
+  rail.setAttribute('height', points.length * ROW);
+  track.setAttribute('d', d);
+  trail.setAttribute('d', d);
+  stub.setAttribute('x', points[0].x - 0.625);
+  stub.setAttribute('y', points[0].y - STUB);
+  stub.setAttribute('height', STUB);
+
+  var dots = points.map(function (p) {
+    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('class', 'rail__dot');
+    c.setAttribute('cx', p.x);
+    c.setAttribute('cy', p.y);
+    c.setAttribute('r', DOT_R);
+    dotsGroup.appendChild(c);
+    return c;
+  });
+
+  var current = 0;   // length along the path where the arrow currently is
+  var frame = null;
+
+  function render(len) {
+    current = len;
+
+    // Solid trail behind the arrow, dotted track ahead of it
+    trail.style.strokeDasharray = len + ' ' + (total + 1);
+
+    var p = track.getPointAtLength(len);
+    var before = track.getPointAtLength(Math.max(0, len - 3));
+    var after = track.getPointAtLength(Math.min(total, len + 3));
+    var angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI - 90;
+    arrow.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ') rotate(' + angle + ')');
+
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('is-passed', stops[i] <= len + 0.5);
+      dots[i].classList.toggle('is-hidden', Math.abs(stops[i] - len) < 6);
+    }
+  }
+
+  function setActive(index) {
+    links.forEach(function (link, i) {
+      if (i === index) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function ease(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function goTo(index) {
+    var from = current, to = stops[index];
+    if (frame) cancelAnimationFrame(frame);
+
+    if (reduceMotion.matches || from === to) {
+      render(to);
+      setActive(index);
+      return;
+    }
+
+    var duration = Math.min(950, Math.max(420, 300 + Math.abs(to - from) * 3.2));
+    var start = null;
+
+    function step(now) {
+      if (start === null) start = now;
+      var t = Math.min(1, (now - start) / duration);
+      render(from + (to - from) * ease(t));
+      if (t < 1) {
+        frame = requestAnimationFrame(step);
+      } else {
+        frame = null;
+        setActive(index);
+      }
+    }
+    frame = requestAnimationFrame(step);
+  }
+
+  links.forEach(function (link, i) {
+    link.addEventListener('click', function () { goTo(i); });
+  });
+
+  render(0);
+})();
+</script>
+</body>
+</html>
